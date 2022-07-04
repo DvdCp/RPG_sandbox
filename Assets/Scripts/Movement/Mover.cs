@@ -6,19 +6,23 @@ namespace RPG.Movement
 {
     public class Mover : MonoBehaviour, IAction
     {
-        private NavMeshAgent _agent;
-        private Animator _animator;
-        private ActionScheduler _scheduler;
+        NavMeshAgent _agent;
+        Animator _animator;
+        ActionScheduler _scheduler;
+        Health _health;
 
         void Start()
         {
             _agent = GetComponent<NavMeshAgent>();
             _animator = GetComponent<Animator>();
             _scheduler = GetComponent<ActionScheduler>();
+            _health = GetComponent<Health>();
         }
 
         void Update()
         {
+            _agent.enabled = !_health.IsDead;
+
             UpdateAnimator();
         }
 
@@ -29,7 +33,7 @@ namespace RPG.Movement
 
         }
 
-        public void StartMovement(Vector3 destination)
+        public void StartMovementAction(Vector3 destination)
         {
             _scheduler.StartAction(this);
             MoveTo(destination);

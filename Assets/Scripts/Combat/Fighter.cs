@@ -11,7 +11,7 @@ namespace RPG.Combat
         [SerializeField] float timeBetweenAttacks = 1f;
         [SerializeField] float weaponDamage = 10f;
 
-        Transform _target;
+        Health _target;
         Mover _mover;
         ActionScheduler _scheduler;
         Animator _animator;
@@ -30,12 +30,11 @@ namespace RPG.Combat
             timeSinceLastAttack += Time.deltaTime;
 
             if (_target == null) return;
+            if (_target.IsDead) return;
 
             if (!GetIsInRange())
             {
-                _mover.MoveTo(_target.position);
-                // transform.LookAt(_target.GetComponent<Collider>().bounds.center);
-
+                _mover.MoveTo(_target.transform.position);
             }
             else
             {
@@ -47,35 +46,56 @@ namespace RPG.Combat
 
         private bool GetIsInRange()
         {
-            return Vector3.Distance(transform.position, _target.position) < weaponRange;
+            return Vector3.Distance(transform.position, _target.transform.position) < weaponRange;
         }
 
-        public void Attack(CombatAttacker enemy)
+        public bool CanAttack(GameObject combatTarget)
+        {
+            if (combatTarget == null) return false;
+
+            Health targetHealth = combatTarget.GetComponent<Health>();
+            return targetHealth != null && !targetHealth.IsDead;
+
+        }
+
+        public void Attack(GameObject enemy)
         {
             _scheduler.StartAction(this);
-            _target = enemy.transform;
+            _target = enemy.GetComponent<Health>(); 
         }
 
         public void Cancel()
         {
+            _animator.SetTrigger("stopAttack");
+            _animator.ResetTrigger("attack");
             _target = null;
         }
 
         private void AttackBehaviour()
         {
+            transform.LookAt(_target.GetComponent<Transform>().position);
+
             if (timeSinceLastAttack > timeBetweenAttacks)
             {
-                _animator.SetTrigger("attack");
+                TriggerAttack();
                 timeSinceLastAttack = 0.0f;
             }
-                
+
         }
+
+        private void TriggerAttack()
+        {
+            // Setting triggers in animator
+            _animator.ResetTrigger("stopAttack"); 
+            _animator.SetTrigger("attack");    // This line start animation and Hit() event
+        }
+         
 
         //Animation event
         void Hit()
         {
-            print("Hit animation event");
-            _target.GetComponent<Health>().TakeDamage(weaponDamage);
+            if (_target == null) return;
+            _target.TakeDamage(weaponDamage); 
         }
     }
 }
