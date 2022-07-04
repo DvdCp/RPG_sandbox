@@ -20,6 +20,7 @@ namespace RPG.Core
 
         public void CancelCurrentAction()
         { 
+            // Just annuling current action... No update of currentAction needed
             StartAction(null);
 
         }

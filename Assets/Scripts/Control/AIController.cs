@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.AI;
 using RPG.Combat;
 using RPG.Core;
 using RPG.Movement;
@@ -9,12 +8,15 @@ namespace RPG.Control
     public class AIController : MonoBehaviour
     {
         [SerializeField] float chaseDistance = 5f;
-
+        [SerializeField] float _suspectDuration = 5f;
+        
         Vector3 _positionToPatrol;
+        float _timeSinceLastsawPlayer = Mathf.Infinity;
         Fighter _fighter;
         Mover _mover;
         Health _health;
         GameObject _player;
+        ActionScheduler _actionScheduler;
 
 
         private void Start()
@@ -24,23 +26,48 @@ namespace RPG.Control
             _fighter = GetComponent<Fighter>();
             _mover = GetComponent<Mover>();
             _health = GetComponent<Health>();
+            _actionScheduler = GetComponent<ActionScheduler>();
         }
 
         private void Update()
         {
             if (_health.IsDead) return;
 
+            // Attack state
             if (InAttackRange(_player) && _fighter.CanAttack(_player.gameObject))
             {
-                _fighter.Attack(_player.gameObject);
+                _timeSinceLastsawPlayer = 0f;
+                AttackBehaviour();
 
             }
-            else 
+            // Suspicion state
+            else if (_timeSinceLastsawPlayer < _suspectDuration)
             {
-                _mover.StartMovementAction(_positionToPatrol);
-                
+                SuspicionBehaviour();
+            }
+            // Return to guard state
+            else
+            {
+                GuardBehaviour();
             }
 
+            _timeSinceLastsawPlayer += Time.deltaTime;
+
+        }
+
+        private void GuardBehaviour()
+        {
+            _mover.StartMovementAction(_positionToPatrol);
+        }
+
+        private void SuspicionBehaviour()
+        {
+            _actionScheduler.CancelCurrentAction();
+        }
+
+        private void AttackBehaviour()
+        {
+            _fighter.Attack(_player.gameObject);
         }
 
         private bool InAttackRange(GameObject player)
