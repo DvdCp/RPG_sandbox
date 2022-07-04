@@ -1,6 +1,8 @@
 using UnityEngine;
+using UnityEngine.AI;
 using RPG.Combat;
 using RPG.Core;
+using RPG.Movement;
 
 namespace RPG.Control
 {
@@ -8,15 +10,19 @@ namespace RPG.Control
     {
         [SerializeField] float chaseDistance = 5f;
 
+        Vector3 _positionToPatrol;
         Fighter _fighter;
+        Mover _mover;
         Health _health;
         GameObject _player;
 
 
         private void Start()
         {
+            _positionToPatrol = transform.position;
             _player = GameObject.FindGameObjectWithTag("Player");
             _fighter = GetComponent<Fighter>();
+            _mover = GetComponent<Mover>();
             _health = GetComponent<Health>();
         }
 
@@ -31,7 +37,8 @@ namespace RPG.Control
             }
             else 
             {
-                _fighter.Cancel();
+                _mover.StartMovementAction(_positionToPatrol);
+                
             }
 
         }
@@ -40,6 +47,12 @@ namespace RPG.Control
         {
             float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
             return chaseDistance > distanceToPlayer;
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, chaseDistance);
         }
     }
 

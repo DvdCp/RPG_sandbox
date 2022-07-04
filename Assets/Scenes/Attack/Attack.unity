@@ -370,26 +370,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 8155559757739651390, guid: 794c0545ddb47ba4f9031afd43dc2a4b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 794c0545ddb47ba4f9031afd43dc2a4b, type: 3}
---- !u!1 &1389317610 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6801961711612318962, guid: 794c0545ddb47ba4f9031afd43dc2a4b, type: 3}
-  m_PrefabInstance: {fileID: 1979181730}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1389317621
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1389317610}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0744b7705cb8eb14c99a0e6db17f797c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chaseDistance: 5
 --- !u!1001 &1592291812
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -538,6 +524,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 8155559757739651390, guid: 794c0545ddb47ba4f9031afd43dc2a4b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 794c0545ddb47ba4f9031afd43dc2a4b, type: 3}
 --- !u!1001 &1919663332
@@ -614,6 +604,10 @@ PrefabInstance:
     - target: {fileID: 6801961711612318962, guid: 794c0545ddb47ba4f9031afd43dc2a4b, type: 3}
       propertyPath: m_Name
       value: Enemy (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8155559757739651390, guid: 794c0545ddb47ba4f9031afd43dc2a4b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 794c0545ddb47ba4f9031afd43dc2a4b, type: 3}
@@ -700,6 +694,14 @@ PrefabInstance:
     - target: {fileID: 6801961711612318962, guid: 794c0545ddb47ba4f9031afd43dc2a4b, type: 3}
       propertyPath: m_Name
       value: Enemy (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8155559757739651390, guid: 794c0545ddb47ba4f9031afd43dc2a4b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8155559757739651390, guid: 794c0545ddb47ba4f9031afd43dc2a4b, type: 3}
+      propertyPath: chaseDistance
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 794c0545ddb47ba4f9031afd43dc2a4b, type: 3}

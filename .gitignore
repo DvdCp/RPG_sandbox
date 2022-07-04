@@ -29,6 +29,9 @@
 # All .meta files
 *.meta
 
+# Ingoring .vsconfig file
+*.vsconfig
+
 # Gradle cache directory
 .gradle/
 
