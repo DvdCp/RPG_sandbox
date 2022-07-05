@@ -66,7 +66,7 @@ namespace RPG.Control
                 }
 
                 // ... else attack target until mouse in pressed down
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButton(0))
                 {
                     GetComponent<Fighter>().Attack(target.gameObject);
                 }

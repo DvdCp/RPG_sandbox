@@ -24,7 +24,7 @@ namespace RPG.Combat
                 Gizmos.DrawSphere(GetWapoint(i), waypointGizmoRadius);
 
                 //Drawing line between waypoints (circular array)            
-                Gizmos.DrawLine(GetWapoint(i), GetWapoint(GetNextIndex(i)));              
+                Gizmos.DrawLine(GetWapoint(i), GetWapoint(GetNextIndex(i)));             
 
             }
 

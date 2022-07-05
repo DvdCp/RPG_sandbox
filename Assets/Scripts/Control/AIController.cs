@@ -67,7 +67,12 @@ namespace RPG.Control
             if (patrolRoute != null)
             {
                 if (AtWaypoint())
+                {
+
+
                     GoToNextWaypoint();
+                }
+                    
 
                 nextPosition = GetCurrentWaypoint();
             }
@@ -87,7 +92,7 @@ namespace RPG.Control
 
         private void GoToNextWaypoint()
         {
-
+            // Getting next waypoint's index
             _currentWaypointIndex =  patrolRoute.GetNextIndex(_currentWaypointIndex);
         }
 
