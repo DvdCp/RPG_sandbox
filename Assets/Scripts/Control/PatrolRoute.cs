@@ -7,24 +7,44 @@ namespace RPG.Combat
 {
     public class PatrolRoute : MonoBehaviour
     {
-        Transform[] _waypoints;
-
-        private void Start()
-        {
-            
-        }
+        int _waypoints;
+        [SerializeField] float waypointGizmoRadius = .3f;
 
         private void OnDrawGizmos()
         {
-            for (int i = 0; i < transform.childCount; i++)
+
+            _waypoints = transform.childCount;
+
+            for (int i = 0; i < _waypoints; i++)
             {
                 Color myColor = new Color(1f, 0.92f, 0.016f, .8f);
                 Gizmos.color = myColor;
-                Gizmos.DrawSphere(transform.GetChild(i).position, .5f);
-   
+
+                // Drawing waypoints gizmos sphere
+                Gizmos.DrawSphere(GetWapoint(i), waypointGizmoRadius);
+
+                //Drawing line between waypoints (circular array)            
+                Gizmos.DrawLine(GetWapoint(i), GetWapoint(GetNextIndex(i)));              
+
             }
 
         }
+
+        public Vector3 GetWapoint(int i)
+        {
+            return transform.GetChild(i).position;
+        }
+
+        
+        public int GetNextIndex(int i)
+        {   
+            // Like a circular array
+            if ((i + 1) % _waypoints == 0)
+                return 0;
+            else
+                return i + 1;
+        }
+
     }
 
 }

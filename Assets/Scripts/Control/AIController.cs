@@ -2,14 +2,18 @@ using UnityEngine;
 using RPG.Combat;
 using RPG.Core;
 using RPG.Movement;
+using System;
 
 namespace RPG.Control
 {
     public class AIController : MonoBehaviour
     {
         [SerializeField] float chaseDistance = 5f;
-        [SerializeField] float _suspectDuration = 5f;
-        
+        [SerializeField] float suspectDuration = 5f;
+        [SerializeField] PatrolRoute patrolRoute;
+        [SerializeField] float waypointsTollerance = .5f;
+
+        int _currentWaypointIndex = 0;
         Vector3 _positionToPatrol;
         float _timeSinceLastsawPlayer = Mathf.Infinity;
         Fighter _fighter;
@@ -41,23 +45,50 @@ namespace RPG.Control
 
             }
             // Suspicion state
-            else if (_timeSinceLastsawPlayer < _suspectDuration)
+            else if (_timeSinceLastsawPlayer < suspectDuration)
             {
                 SuspicionBehaviour();
             }
             // Return to guard state
             else
             {
-                GuardBehaviour();
+                PatrolBehaviour();
             }
 
             _timeSinceLastsawPlayer += Time.deltaTime;
 
         }
 
-        private void GuardBehaviour()
+        private void PatrolBehaviour()
         {
-            _mover.StartMovementAction(_positionToPatrol);
+            // Using patroleRoute waypoints like in a circula way
+            Vector3 nextPosition = _positionToPatrol;
+
+            if (patrolRoute != null)
+            {
+                if (AtWaypoint())
+                    GoToNextWaypoint();
+
+                nextPosition = GetCurrentWaypoint();
+            }
+
+            _mover.StartMovementAction(nextPosition);
+        }
+        private bool AtWaypoint()
+        {
+            // If is enough near the waypoint, return True, False otherwhise
+            return Vector3.Distance(transform.position, GetCurrentWaypoint()) < waypointsTollerance;
+        }
+
+        private Vector3 GetCurrentWaypoint()
+        {
+            return patrolRoute.GetWapoint(_currentWaypointIndex);
+        }
+
+        private void GoToNextWaypoint()
+        {
+
+            _currentWaypointIndex =  patrolRoute.GetNextIndex(_currentWaypointIndex);
         }
 
         private void SuspicionBehaviour()
