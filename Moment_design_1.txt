@@ -1,0 +1,9 @@
+Moment Design 1
+
+The player is coming from the wood, approaching a little village full of guards. There is a map to collect in order to find his objective.
+
+This moment takes place starting from the wood and then into the village
+
+The player must kill all guards in order to secure the village
+
+Guards follow a patrol route. The player can choose to use this behaviour to take down guards one by one
