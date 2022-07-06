@@ -9,13 +9,15 @@ namespace RPG.Control
     public class AIController : MonoBehaviour
     {
         [SerializeField] float chaseDistance = 5f;
-        [SerializeField] float suspectDuration = 5f;
+        [SerializeField] float suspicionTime = 4f;
+        [SerializeField] float waypointDwellTime = 5f;
         [SerializeField] PatrolRoute patrolRoute;
         [SerializeField] float waypointsTollerance = .5f;
 
         int _currentWaypointIndex = 0;
-        Vector3 _positionToPatrol;
-        float _timeSinceLastsawPlayer = Mathf.Infinity;
+        Vector3 _guardPosition;
+        float _timeSinceLastSawPlayer = Mathf.Infinity;
+        float _timeSinceArrivedAtWaypoint = Mathf.Infinity;
         Fighter _fighter;
         Mover _mover;
         Health _health;
@@ -25,7 +27,7 @@ namespace RPG.Control
 
         private void Start()
         {
-            _positionToPatrol = transform.position;
+            _guardPosition = transform.position;
             _player = GameObject.FindGameObjectWithTag("Player");
             _fighter = GetComponent<Fighter>();
             _mover = GetComponent<Mover>();
@@ -40,12 +42,12 @@ namespace RPG.Control
             // Attack state
             if (InAttackRange(_player) && _fighter.CanAttack(_player.gameObject))
             {
-                _timeSinceLastsawPlayer = 0f;
+                _timeSinceLastSawPlayer = 0f;
                 AttackBehaviour();
 
             }
             // Suspicion state
-            else if (_timeSinceLastsawPlayer < suspectDuration)
+            else if (_timeSinceLastSawPlayer < suspicionTime)
             {
                 SuspicionBehaviour();
             }
@@ -55,21 +57,20 @@ namespace RPG.Control
                 PatrolBehaviour();
             }
 
-            _timeSinceLastsawPlayer += Time.deltaTime;
-
+            _timeSinceLastSawPlayer += Time.deltaTime;
+            _timeSinceArrivedAtWaypoint += Time.deltaTime;
         }
 
         private void PatrolBehaviour()
         {
             // Using patroleRoute waypoints like in a circula way
-            Vector3 nextPosition = _positionToPatrol;
+            Vector3 nextPosition = _guardPosition;
 
             if (patrolRoute != null)
             {
                 if (AtWaypoint())
                 {
-
-
+                    _timeSinceArrivedAtWaypoint = 0;
                     GoToNextWaypoint();
                 }
                     
@@ -77,7 +78,11 @@ namespace RPG.Control
                 nextPosition = GetCurrentWaypoint();
             }
 
-            _mover.StartMovementAction(nextPosition);
+            if (_timeSinceArrivedAtWaypoint > waypointDwellTime)
+            {
+                _mover.StartMovementAction(nextPosition);
+            }
+
         }
         private bool AtWaypoint()
         {
