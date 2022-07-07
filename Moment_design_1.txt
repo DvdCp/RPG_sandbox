@@ -1,5 +1,7 @@
 Moment Design 1
 
+Background: The player
+
 The player is coming from the wood, approaching a little village full of guards. There is a map to collect in order to find his objective.
 
 This moment takes place starting from the wood and then into the village
