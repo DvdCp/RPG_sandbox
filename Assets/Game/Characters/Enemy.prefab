@@ -64,6 +64,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1895139638, guid: 8e9e3f3bc17333d449fa2b3e0fbd5db5, type: 3}
+      propertyPath: weaponDamage
+      value: 12.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2772587422210983204, guid: 8e9e3f3bc17333d449fa2b3e0fbd5db5, type: 3}
       propertyPath: healthPoints
       value: 20
@@ -144,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6df8a3995ea00be42a2df7fe4b264e4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPoints: 25
+  healthPoints: 40
 --- !u!114 &7439025207389898043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,3 +174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chaseDistance: 5
+  suspicionTime: 4
+  waypointDwellTime: 5
+  patrolRoute: {fileID: 0}
+  waypointsTollerance: 0.5

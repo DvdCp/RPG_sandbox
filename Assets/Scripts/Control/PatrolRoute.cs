@@ -10,11 +10,13 @@ namespace RPG.Combat
         int _waypoints;
         [SerializeField] float waypointGizmoRadius = .3f;
 
+        private void Awake()
+        {
+            _waypoints = transform.childCount;
+        }
+
         private void OnDrawGizmos()
         {
-
-            _waypoints = transform.childCount;
-
             for (int i = 0; i < _waypoints; i++)
             {
                 Color myColor = new Color(1f, 0.92f, 0.016f, .8f);
@@ -37,7 +39,8 @@ namespace RPG.Combat
 
         
         public int GetNextIndex(int i)
-        {   
+        {
+            print((i + 1) + "%" + _waypoints);
             // Like a circular array
             if ((i + 1) % _waypoints == 0)
                 return 0;
