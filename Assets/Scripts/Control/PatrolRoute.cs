@@ -27,28 +27,22 @@ namespace RPG.Combat
 
                 //Drawing line between waypoints (circular array)            
                 Gizmos.DrawLine(GetWapoint(i), GetWapoint(GetNextIndex(i)));             
-
             }
-
         }
 
         public Vector3 GetWapoint(int i)
         {
             return transform.GetChild(i).position;
         }
-
-        
+     
         public int GetNextIndex(int i)
         {
-            print((i + 1) + "%" + _waypoints);
             // Like a circular array
             if ((i + 1) % _waypoints == 0)
                 return 0;
             else
                 return i + 1;
         }
-
     }
-
 }
 

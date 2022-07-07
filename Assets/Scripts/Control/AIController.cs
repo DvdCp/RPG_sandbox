@@ -12,6 +12,8 @@ namespace RPG.Control
         [SerializeField] float suspicionTime = 4f;
         [SerializeField] float waypointDwellTime = 5f;
         [SerializeField] PatrolRoute patrolRoute;
+        [Range(0, 1)]
+        [SerializeField] float patrolSpeedFraction = 0.2f;
         [SerializeField] float waypointsTollerance = .5f;
 
         int _currentWaypointIndex = 0;
@@ -80,7 +82,7 @@ namespace RPG.Control
 
             if (_timeSinceArrivedAtWaypoint > waypointDwellTime)
             {
-                _mover.StartMovementAction(nextPosition);
+                _mover.StartMovementAction(nextPosition, patrolSpeedFraction);
             }
 
         }
@@ -107,7 +109,7 @@ namespace RPG.Control
         }
 
         private void AttackBehaviour()
-        {
+        {   
             _fighter.Attack(_player.gameObject);
         }
 

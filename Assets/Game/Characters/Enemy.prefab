@@ -68,6 +68,10 @@ PrefabInstance:
       propertyPath: weaponDamage
       value: 12.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1895139638, guid: 8e9e3f3bc17333d449fa2b3e0fbd5db5, type: 3}
+      propertyPath: chaseSpeedFraction
+      value: 0.9
+      objectReference: {fileID: 0}
     - target: {fileID: 2772587422210983204, guid: 8e9e3f3bc17333d449fa2b3e0fbd5db5, type: 3}
       propertyPath: healthPoints
       value: 20
@@ -177,4 +181,5 @@ MonoBehaviour:
   suspicionTime: 4
   waypointDwellTime: 5
   patrolRoute: {fileID: 0}
+  patrolSpeedFraction: 0.2
   waypointsTollerance: 0.5

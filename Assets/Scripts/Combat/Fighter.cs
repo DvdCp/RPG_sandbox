@@ -10,6 +10,8 @@ namespace RPG.Combat
         [SerializeField] float weaponRange = 2f;    // 2 meters
         [SerializeField] float timeBetweenAttacks = 1f;
         [SerializeField] float weaponDamage = 10f;
+        [Range(0, 1f)]
+        [SerializeField] float chaseSpeedFraction;
 
         Health _target;
         Mover _mover;
@@ -34,7 +36,7 @@ namespace RPG.Combat
 
             if (!GetIsInRange())
             {
-                _mover.MoveTo(_target.transform.position);
+                _mover.MoveTo(_target.transform.position, chaseSpeedFraction);
             }
             else
             {

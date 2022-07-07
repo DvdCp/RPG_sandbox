@@ -25,30 +25,8 @@ namespace RPG.Control
             if (_health.IsDead) return;
             if (InteractWithCombat()) return;
             if (InteractWithMovement()) return;
-            
-            //if (Input.GetMouseButton(0))
-            //{
-            //    // Obtaining Ray from mouse and info about hit
-            //    RaycastHit hit;
-            //    bool hasHit = Physics.Raycast(GetRayFromMouse(), out hit);
-
-            //    if (hasHit)
-            //    { 
-            //        _mover.StartMovementAction(hit.point);
-            //        Combat(hit);
-            //    }               
-            //}
+           
         }
-
-        //private void Combat(RaycastHit mouseInput)
-        //{
-        //    CombatTarget target = mouseInput.collider.GetComponent<CombatTarget>();
-        //    if (target != null)
-        //    {
-        //        if (_fighter.CanAttack(target))
-        //            _fighter.Attack(target);
-        //    }
-        //}
 
         private bool InteractWithCombat()
         {
@@ -83,7 +61,8 @@ namespace RPG.Control
             {
                 if (Input.GetMouseButton(0))
                 {
-                    GetComponent<Mover>().StartMovementAction(hit.point);
+                    // Going full speed to hit.point
+                    GetComponent<Mover>().StartMovementAction(hit.point, 1f);
                 }
                 return true;
             }
