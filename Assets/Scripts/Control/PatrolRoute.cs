@@ -17,6 +17,8 @@ namespace RPG.Combat
 
         private void OnDrawGizmos()
         {
+            _waypoints = transform.childCount;
+
             for (int i = 0; i < _waypoints; i++)
             {
                 Color myColor = new Color(1f, 0.92f, 0.016f, .8f);
