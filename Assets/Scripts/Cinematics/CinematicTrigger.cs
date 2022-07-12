@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
+using RPG.Control;
 
 namespace RPG.Cinematics
 {
@@ -11,12 +12,12 @@ namespace RPG.Cinematics
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!isPlayed)
-            { 
+            if (!isPlayed && other.tag == "Player")
+            {
                 GetComponent<PlayableDirector>().Play();
-                isPlayed = true;           
+                isPlayed = true;
             }
-
+            
         }
     }
 
