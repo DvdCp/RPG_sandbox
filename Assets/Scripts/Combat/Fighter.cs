@@ -71,6 +71,8 @@ namespace RPG.Combat
             _animator.SetTrigger("stopAttack");
             _animator.ResetTrigger("attack");
             _target = null;
+            // Cancelling also the movement
+            GetComponent<Mover>().Cancel();
         }
 
         private void AttackBehaviour()

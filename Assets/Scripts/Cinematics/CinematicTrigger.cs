@@ -18,7 +18,7 @@ namespace RPG.Cinematics
                 isPlayed = true;
             }
             
-        }
+        } 
     }
 
 }
