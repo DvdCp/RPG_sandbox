@@ -7,8 +7,14 @@ namespace RPG.Core
 { 
     public class Portal : MonoBehaviour
     {
+        enum DestinationIdintifier
+        { 
+            A, B, C, D
+        }
+
         [SerializeField] int sceneToLoad = 1;
         [SerializeField] Transform spawnPoint;
+        [SerializeField] DestinationIdintifier destination;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -21,22 +27,26 @@ namespace RPG.Core
         {
             // Preventing destroy portal when the new scene is loading
             DontDestroyOnLoad(gameObject);
-            
+
             // Loading new scene in background
             yield return SceneManager.LoadSceneAsync(sceneToLoad);
 
             // Finding portal into new loaded scene
             Portal arrivingPortal = getNextPortal();
 
-            // Updating player location & rotation
-            GameObject player = GameObject.FindWithTag("Player");
-            player.GetComponent<NavMeshAgent>().Warp(arrivingPortal.spawnPoint.transform.position);
-            //player.transform.position = arrivingPortal.spawnPoint.transform.position;
-            player.transform.rotation = arrivingPortal.spawnPoint.transform.rotation;
+            UpdatePlayer(arrivingPortal);
 
             // Now destroy this portal
             Destroy(gameObject);
 
+        }
+
+        private static void UpdatePlayer(Portal arrivingPortal)
+        {
+            // Updating player location & rotation
+            GameObject player = GameObject.FindWithTag("Player");
+            player.GetComponent<NavMeshAgent>().Warp(arrivingPortal.spawnPoint.transform.position);
+            player.transform.rotation = arrivingPortal.spawnPoint.transform.rotation;
         }
 
         private Portal getNextPortal()
@@ -44,6 +54,7 @@ namespace RPG.Core
             foreach (Portal portal in FindObjectsOfType<Portal>())
             { 
                 if (portal == this) continue;
+                if (portal.destination != destination) continue;
 
                 return portal;            
             }
