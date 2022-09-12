@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
 namespace RPG.Core 
@@ -12,15 +13,14 @@ namespace RPG.Core
         private void OnTriggerEnter(Collider other)
         {
             if (other.tag == "Player")
-                StartCoroutine(Transition(other.transform));
+                StartCoroutine(Transition());
                            
         }
 
-        private IEnumerator Transition(Transform player)
+        private IEnumerator Transition()
         {
             // Preventing destroy portal when the new scene is loading
-            //DontDestroyOnLoad(gameObject);
-            // P.N: this method doesn't work as we want in Unity 2021.3.3f1
+            DontDestroyOnLoad(gameObject);
             
             // Loading new scene in background
             yield return SceneManager.LoadSceneAsync(sceneToLoad);
@@ -28,9 +28,12 @@ namespace RPG.Core
             // Finding portal into new loaded scene
             Portal arrivingPortal = getNextPortal();
 
-            // Updating player location
-            player.position = arrivingPortal.spawnPoint.transform.position;
-            
+            // Updating player location & rotation
+            GameObject player = GameObject.FindWithTag("Player");
+            player.GetComponent<NavMeshAgent>().Warp(arrivingPortal.spawnPoint.transform.position);
+            //player.transform.position = arrivingPortal.spawnPoint.transform.position;
+            player.transform.rotation = arrivingPortal.spawnPoint.transform.rotation;
+
             // Now destroy this portal
             Destroy(gameObject);
 
